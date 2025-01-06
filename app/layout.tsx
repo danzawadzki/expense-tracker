@@ -25,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100`}
+      >
         <div className="container mx-auto p-6">
           <TRPCProvider>{children}</TRPCProvider>
         </div>
