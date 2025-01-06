@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { db } from '@/db/drizzle';
 import { expenses } from '@/db/schema';
 import { baseProcedure, createTRPCRouter } from '@/trpc/init';
+import { eq } from 'drizzle-orm';
 
 export const appRouter = createTRPCRouter({
   getExpenses: baseProcedure.query(async () => {
@@ -23,6 +24,12 @@ export const appRouter = createTRPCRouter({
         })
         .returning();
       return newExpense[0];
+    }),
+  deleteExpense: baseProcedure
+    .input(z.object({ id: z.number().positive() }))
+    .mutation(async ({ input }) => {
+      await db.delete(expenses).where(eq(expenses.id, input.id));
+      return { success: true };
     }),
 });
 
